@@ -1,6 +1,7 @@
-package com.test.revoluttestapp
+package com.test.revoluttestapp.presentation
 
 import android.os.Bundle
+import com.test.revoluttestapp.R
 import dagger.android.support.DaggerAppCompatActivity
 
 class MainActivity : DaggerAppCompatActivity() {

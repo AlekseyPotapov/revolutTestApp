@@ -2,6 +2,7 @@ package com.test.revoluttestapp.presentation.di.module
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.test.revoluttestapp.data.network.APIClient
 import com.test.revoluttestapp.presentation.di.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
@@ -44,5 +45,11 @@ class NetworkModule {
             .addConverterFactory(converterFactory)
             .client(httpClient)
             .build()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun provideApiClient(retrofit: Retrofit): APIClient {
+        return retrofit.create(APIClient::class.java)
     }
 }
