@@ -1,7 +1,10 @@
 package com.test.revoluttestapp.presentation.di.module
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import com.test.revoluttestapp.data.network.APIClient
 import com.test.revoluttestapp.presentation.di.scope.ApplicationScope
 import dagger.Module
@@ -14,6 +17,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class NetworkModule {
+
+    @Provides
+    @ApplicationScope
+    fun providePicasso(context: Context, httpClient: OkHttpClient): Picasso {
+        return Picasso.Builder(context)
+            .downloader(OkHttp3Downloader(httpClient))
+            .build()
+    }
 
     @Provides
     @ApplicationScope
