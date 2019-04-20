@@ -9,7 +9,8 @@ import dagger.Module
 @Module(includes = [
     NetworkModule::class,
     ViewModelModule::class,
-    InteractorModule::class
+    InteractorModule::class,
+    RepositoryModule::class
 ])
 abstract class ApplicationModule {
 

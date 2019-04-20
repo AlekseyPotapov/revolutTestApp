@@ -16,9 +16,10 @@ import javax.inject.Singleton
     ActivityModule::class
 ])
 
-@Singleton
 @ApplicationScope
 interface ApplicationComponent: AndroidInjector<App> {
+
+    fun inject(application: ApplicationComponent)
 
     @Component.Builder
     interface Builder {

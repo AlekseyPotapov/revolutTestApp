@@ -17,9 +17,9 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ConverterViewModel::class)
     @ApplicationScope
-    abstract fun bindConverterViewModel(viewModel: ConverterViewModel): ViewModel
+    @ViewModelKey(ConverterViewModel::class)
+    internal abstract fun bindConverterViewModel(viewModel: ConverterViewModel): ViewModel
 
     @Binds
     @ApplicationScope

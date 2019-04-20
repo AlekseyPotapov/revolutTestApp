@@ -12,5 +12,4 @@ class App: DaggerApplication() {
     }
 
     override fun applicationInjector() = applicationInjector
-
 }
