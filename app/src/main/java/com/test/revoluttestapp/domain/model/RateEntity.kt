@@ -4,6 +4,7 @@ enum class RateEntity(
     val value: String,
     val icon: String
 ){
+    EUR ("EUR", "http://beerguevara.com/wp-content/uploads/2015/05/Gift-Voucher-Dollar-sign-300x300.jpg"),
     AUD ("AUD", "http://beerguevara.com/wp-content/uploads/2015/05/Gift-Voucher-Dollar-sign-300x300.jpg"),
     BGN ("BGN", "http://beerguevara.com/wp-content/uploads/2015/05/Gift-Voucher-Dollar-sign-300x300.jpg"),
     BRL ("BRL", "http://beerguevara.com/wp-content/uploads/2015/05/Gift-Voucher-Dollar-sign-300x300.jpg"),

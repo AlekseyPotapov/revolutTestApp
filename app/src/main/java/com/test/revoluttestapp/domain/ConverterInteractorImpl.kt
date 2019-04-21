@@ -11,9 +11,29 @@ class ConverterInteractorImpl @Inject constructor(
     private val converterRepository: ConverterRepository
 ) : ConverterInteractor {
 
+    private val firstRow by lazy {
+        val name = "EUR"
+        val rate = RateEntity.valueOf(name)
+
+        Currency(
+            name = name,
+            longName = rate.value,
+            icon = rate.icon,
+            value = "100"
+        )
+    }
+
     override fun getCurrencyList(): Observable<List<Currency>> =
         converterRepository.getCurrencyList()
-            .map { it.toCurrency() }
+            .map {
+                it.toCurrency().addTheFirstRow()//.addTheFirstRow()
+            }
 
+    private fun List<Currency>.addTheFirstRow(): List<Currency> {
+        return ArrayList(this).apply {
+            add(0, firstRow)
+        }
+    }
 }
+
 
