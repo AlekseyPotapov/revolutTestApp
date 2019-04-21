@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient
 class AdapterModule {
 
     @Provides
-    @ActivityScope
+    @ApplicationScope
     fun provideLinearLayoutManager(context: Context): LinearLayoutManager {
         return LinearLayoutManager(context)
     }

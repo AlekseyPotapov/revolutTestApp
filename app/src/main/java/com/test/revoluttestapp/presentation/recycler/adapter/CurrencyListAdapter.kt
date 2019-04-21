@@ -26,7 +26,7 @@ class CurrencyListAdapter @Inject constructor(
         internal val image: ImageView = itemView.findViewById(R.id.image) as ImageView
     }
 
-    private lateinit var currencies: List<Currency>
+    private var currencies: List<Currency> = emptyList()
 
     fun setCurrencies(currencies: List<Currency>) {
         this.currencies = currencies

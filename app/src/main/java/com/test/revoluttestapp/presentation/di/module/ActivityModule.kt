@@ -5,9 +5,7 @@ import com.test.revoluttestapp.presentation.di.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Module(includes = [
-    AdapterModule::class
-])
+@Module
 abstract class ActivityModule {
 
     @ActivityScope
