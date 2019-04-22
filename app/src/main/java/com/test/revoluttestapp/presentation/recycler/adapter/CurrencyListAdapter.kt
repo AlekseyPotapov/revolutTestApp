@@ -4,15 +4,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test.revoluttestapp.presentation.model.Currency
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import android.view.LayoutInflater
+import android.widget.*
 import com.squareup.picasso.Picasso
-import com.test.revoluttestapp.R
 import javax.inject.Inject
-
+import android.view.View.OnFocusChangeListener
+import com.test.revoluttestapp.R
 
 class CurrencyListAdapter @Inject constructor(
     private val picasso: Picasso
@@ -26,11 +23,16 @@ class CurrencyListAdapter @Inject constructor(
         internal val image: ImageView = itemView.findViewById(R.id.image) as ImageView
     }
 
-    private var currencies: List<Currency> = emptyList()
+    private var currencies: MutableList<Currency> = mutableListOf()
+    private var onItemSelectListener: ((Currency) -> Unit)? = null
 
     fun setCurrencies(currencies: List<Currency>) {
-        this.currencies = currencies
+        this.currencies = currencies as MutableList<Currency>
         notifyDataSetChanged()
+    }
+
+    fun setItemSelectListener(block: (Currency) -> Unit) {
+        onItemSelectListener = block
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyAdapterViewHolder {
@@ -50,8 +52,20 @@ class CurrencyListAdapter @Inject constructor(
             title.text = currency.longName
             subTitle.text = currency.name
             picasso.load(currency.icon).into(image)
-            value.setText(currency.value)
+            value.setText(currency.value.toString())
+            value.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    selectItem(position)
+                    onItemSelectListener?.invoke(currency)
+                }
+            }
         }
     }
 
+    private fun selectItem(index: Int) {
+        val movingItem = currencies[index]
+        currencies.removeAt(index)
+        currencies.add(0, movingItem)
+        notifyItemMoved(index, 0)
+    }
 }

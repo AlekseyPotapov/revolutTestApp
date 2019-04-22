@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.revoluttestapp.presentation.extensions.bindView
 import com.test.revoluttestapp.presentation.model.Currency
@@ -37,9 +38,12 @@ class MainActivity : DaggerAppCompatActivity() {
         recycler.apply {
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
-            adapter = currencyListAdapter
+            adapter = currencyListAdapter.apply {
+                setItemSelectListener {
+                    viewModel.selectItem(it)
+                }
+            }
         }
-
         observeUi()
     }
 

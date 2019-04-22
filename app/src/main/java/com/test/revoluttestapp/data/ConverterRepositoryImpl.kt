@@ -1,5 +1,6 @@
 package com.test.revoluttestapp.data
 
+import com.test.revoluttestapp.data.mapper.toCurrencyEntityList
 import com.test.revoluttestapp.data.model.Response
 import com.test.revoluttestapp.data.source.NetworkSource
 import com.test.revoluttestapp.domain.ConverterRepository
@@ -26,8 +27,3 @@ class ConverterRepositoryImpl @Inject constructor(
     }
 }
 
-private fun Response.toCurrencyEntityList(): List<CurrencyEntity> {
-    return rates.map { entry ->
-        CurrencyEntity(entry.key, entry.value.toString())
-    }
-}

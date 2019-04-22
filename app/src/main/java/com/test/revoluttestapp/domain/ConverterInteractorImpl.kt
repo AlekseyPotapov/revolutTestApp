@@ -19,15 +19,14 @@ class ConverterInteractorImpl @Inject constructor(
             name = name,
             longName = rate.value,
             icon = rate.icon,
-            value = "100"
+            value = 100.0
         )
     }
 
     override fun getCurrencyList(): Observable<List<Currency>> =
-        converterRepository.getCurrencyList()
-            .map {
-                it.toCurrency().addTheFirstRow()//.addTheFirstRow()
-            }
+        converterRepository
+            .getCurrencyList()
+            .map { it.toCurrency().addTheFirstRow() }
 
     private fun List<Currency>.addTheFirstRow(): List<Currency> {
         return ArrayList(this).apply {
@@ -35,5 +34,3 @@ class ConverterInteractorImpl @Inject constructor(
         }
     }
 }
-
-
