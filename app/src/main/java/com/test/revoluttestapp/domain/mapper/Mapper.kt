@@ -4,7 +4,7 @@ import com.test.revoluttestapp.domain.model.CurrencyEntity
 import com.test.revoluttestapp.domain.model.RateEntity
 import com.test.revoluttestapp.presentation.model.Currency
 
-fun List<CurrencyEntity>.toCurrency(): List<Currency> {
+fun List<CurrencyEntity>.toCurrencies(): List<Currency> {
     return map { currencyEntity ->
         val rate = RateEntity.valueOf(currencyEntity.name)
 
@@ -12,7 +12,7 @@ fun List<CurrencyEntity>.toCurrency(): List<Currency> {
             name = currencyEntity.name,
             longName = rate.value,
             icon = rate.icon,
-            value = currencyEntity.value
+            value = currencyEntity.value.toString()
         )
     }
 }

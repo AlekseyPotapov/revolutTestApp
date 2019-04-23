@@ -1,10 +1,10 @@
 package com.test.revoluttestapp.domain
 
 import com.test.revoluttestapp.domain.model.CurrencyEntity
-import io.reactivex.Observable
+import io.reactivex.Single
 
 interface ConverterRepository {
 
-    fun getCurrencyList(): Observable<List<CurrencyEntity>>
+    fun getCurrencyList(): Single<List<CurrencyEntity>>
 
 }

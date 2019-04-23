@@ -6,6 +6,7 @@ import com.test.revoluttestapp.data.source.NetworkSource
 import com.test.revoluttestapp.domain.ConverterRepository
 import com.test.revoluttestapp.domain.model.CurrencyEntity
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -14,16 +15,11 @@ class ConverterRepositoryImpl @Inject constructor(
     private val networkSource: NetworkSource
 ) : ConverterRepository {
 
-    override fun getCurrencyList(): Observable<List<CurrencyEntity>> =
-        Observable.interval(0, PERIOD, TimeUnit.MILLISECONDS)
-            .flatMapSingle { networkSource.getCurrencyList() }
+    override fun getCurrencyList(): Single<List<CurrencyEntity>> =
+        networkSource.getCurrencyList()
             .map { response ->
                 response.toCurrencyEntityList()
             }
             .subscribeOn(Schedulers.io())
-
-    companion object {
-        val PERIOD = 1000L
-    }
 }
 

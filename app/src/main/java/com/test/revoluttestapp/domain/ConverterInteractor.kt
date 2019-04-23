@@ -8,4 +8,11 @@ interface ConverterInteractor {
     fun getCurrencyList(): Observable<List<Currency>>
 
     fun recalculate(value: String, currency: Currency)
+
+    fun stopUpdating()
+
+    companion object {
+        val PERIOD = 1000L
+    }
+
 }

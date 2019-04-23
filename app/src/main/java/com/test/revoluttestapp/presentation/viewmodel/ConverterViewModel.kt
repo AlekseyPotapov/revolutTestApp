@@ -10,6 +10,7 @@ import com.test.revoluttestapp.presentation.model.Currency
 import io.reactivex.BackpressureStrategy
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import java.lang.NumberFormatException
 import javax.inject.Inject
 
 class ConverterViewModel @Inject constructor(
@@ -20,12 +21,9 @@ class ConverterViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    private var stopUpdating = false
-
     val progressState: LiveData<List<Currency>> = LiveDataReactiveStreams.fromPublisher(
         converterInteractor
             .getCurrencyList()
-            .filter { !stopUpdating }
             .doOnNext {
                 Log.d(LOG_TAG, "getCurrencyList() = $it")
             }
@@ -35,10 +33,11 @@ class ConverterViewModel @Inject constructor(
     val calculation = MutableLiveData<List<Currency>>()
 
     fun selectItem() {
-        stopUpdating = true
+        converterInteractor.stopUpdating()
     }
 
     fun calculateNewCurrencies(value: String, currency: Currency) {
+        Log.d(LOG_TAG, "string = $value currency = $currency")
         converterInteractor.recalculate(value, currency)
     }
 
