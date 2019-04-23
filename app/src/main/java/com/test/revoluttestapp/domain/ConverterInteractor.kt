@@ -7,4 +7,5 @@ interface ConverterInteractor {
 
     fun getCurrencyList(): Observable<List<Currency>>
 
+    fun recalculate(value: String, currency: Currency)
 }

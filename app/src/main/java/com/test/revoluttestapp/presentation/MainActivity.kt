@@ -4,6 +4,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.revoluttestapp.presentation.extensions.bindView
@@ -40,7 +42,10 @@ class MainActivity : DaggerAppCompatActivity() {
             layoutManager = linearLayoutManager
             adapter = currencyListAdapter.apply {
                 setItemSelectListener {
-                    viewModel.selectItem(it)
+                    viewModel.selectItem()
+                }
+                setItemValueChangeListener { value, currency ->
+                    viewModel.calculateNewCurrencies(value, currency)
                 }
             }
         }

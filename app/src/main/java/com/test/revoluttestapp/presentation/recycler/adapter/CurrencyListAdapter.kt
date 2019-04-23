@@ -1,5 +1,7 @@
 package com.test.revoluttestapp.presentation.recycler.adapter
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test.revoluttestapp.presentation.model.Currency
@@ -25,6 +27,7 @@ class CurrencyListAdapter @Inject constructor(
 
     private var currencies: MutableList<Currency> = mutableListOf()
     private var onItemSelectListener: ((Currency) -> Unit)? = null
+    private var onItemValueChangeListener: ((String, Currency) -> Unit)? = null
 
     fun setCurrencies(currencies: List<Currency>) {
         this.currencies = currencies as MutableList<Currency>
@@ -33,6 +36,10 @@ class CurrencyListAdapter @Inject constructor(
 
     fun setItemSelectListener(block: (Currency) -> Unit) {
         onItemSelectListener = block
+    }
+
+    fun setItemValueChangeListener(block: (String, Currency) -> Unit) {
+        onItemValueChangeListener = block
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyAdapterViewHolder {
@@ -55,14 +62,30 @@ class CurrencyListAdapter @Inject constructor(
             value.setText(currency.value.toString())
             value.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    selectItem(position)
+                    selectItem(currency)
                     onItemSelectListener?.invoke(currency)
                 }
+            }
+            onItemValueChangeListener?.let {
+                value.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        onItemValueChangeListener?.invoke(s.toString(), currency)
+                    }
+
+                })
             }
         }
     }
 
-    private fun selectItem(index: Int) {
+    private fun selectItem(currency: Currency) {
+        val index = currencies.indexOf(currency)
         val movingItem = currencies[index]
         currencies.removeAt(index)
         currencies.add(0, movingItem)

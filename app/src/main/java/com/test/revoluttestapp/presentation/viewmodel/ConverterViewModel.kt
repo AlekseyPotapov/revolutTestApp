@@ -21,14 +21,12 @@ class ConverterViewModel @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     private var stopUpdating = false
-    private var cachedCurrencyList: List<Currency>? = null
 
     val progressState: LiveData<List<Currency>> = LiveDataReactiveStreams.fromPublisher(
         converterInteractor
             .getCurrencyList()
             .filter { !stopUpdating }
             .doOnNext {
-                cachedCurrencyList = it
                 Log.d(LOG_TAG, "getCurrencyList() = $it")
             }
             .toFlowable(BackpressureStrategy.LATEST)
@@ -36,9 +34,12 @@ class ConverterViewModel @Inject constructor(
 
     val calculation = MutableLiveData<List<Currency>>()
 
-    fun selectItem(currency: Currency) {
+    fun selectItem() {
         stopUpdating = true
+    }
 
+    fun calculateNewCurrencies(value: String, currency: Currency) {
+        converterInteractor.recalculate(value, currency)
     }
 
     override fun onCleared() {

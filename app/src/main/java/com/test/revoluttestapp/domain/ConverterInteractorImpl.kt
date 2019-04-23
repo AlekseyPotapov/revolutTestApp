@@ -23,6 +23,11 @@ class ConverterInteractorImpl @Inject constructor(
         )
     }
 
+    override fun recalculate(value: String, currency: Currency) {
+        converterRepository
+            .getCurrencyList()
+    }
+
     override fun getCurrencyList(): Observable<List<Currency>> =
         converterRepository
             .getCurrencyList()
